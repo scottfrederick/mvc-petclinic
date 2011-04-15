@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.Clinic;
 import org.springframework.samples.petclinic.Pet;
 import org.springframework.samples.petclinic.PetType;
-import org.springframework.samples.petclinic.validation.PetValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+import javax.validation.Valid;
 
 /**
  * JavaBean Form controller that is used to edit an existing <code>Pet</code>.
@@ -58,8 +59,7 @@ public class EditPetForm {
 	}
 
 	@RequestMapping(method = { RequestMethod.PUT, RequestMethod.POST })
-	public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result, SessionStatus status) {
-		new PetValidator().validate(pet, result);
+	public String processSubmit(@Valid @ModelAttribute("pet") Pet pet, BindingResult result, SessionStatus status) {
 		if (result.hasErrors()) {
 			return "pets/form";
 		}

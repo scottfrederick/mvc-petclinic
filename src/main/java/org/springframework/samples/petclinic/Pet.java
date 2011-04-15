@@ -1,14 +1,12 @@
 package org.springframework.samples.petclinic;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
+
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Past;
+import java.util.*;
 
 /**
  * Simple JavaBean business object representing a pet.
@@ -19,6 +17,7 @@ import org.springframework.beans.support.PropertyComparator;
  */
 public class Pet extends NamedEntity {
 
+    @Past
 	private Date birthDate;
 
 	private PetType type;
@@ -27,8 +26,21 @@ public class Pet extends NamedEntity {
 
 	private Set<Visit> visits;
 
+    @Override
+    @NotEmpty
+    public String getName() {
+        return super.getName();
+    }
 
-	public void setBirthDate(Date birthDate) {
+    @AssertTrue(message = "duplicate")
+    public boolean isUnique() {
+        if (isNew() && getOwner().getPet(getName(), true) != null) {
+			return false;
+		}
+        return true;
+    }
+
+    public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 
