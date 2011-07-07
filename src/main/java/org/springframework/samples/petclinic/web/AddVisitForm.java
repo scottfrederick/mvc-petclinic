@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.Clinic;
 import org.springframework.samples.petclinic.Pet;
 import org.springframework.samples.petclinic.Visit;
-import org.springframework.samples.petclinic.validation.VisitValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
+import javax.validation.Valid;
 
 /**
  * JavaBean form controller that is used to add a new <code>Visit</code> to the
@@ -32,7 +33,6 @@ import org.springframework.web.bind.support.SessionStatus;
 public class AddVisitForm {
 
 	private final Clinic clinic;
-
 
 	@Autowired
 	public AddVisitForm(Clinic clinic) {
@@ -54,8 +54,7 @@ public class AddVisitForm {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("visit") Visit visit, BindingResult result, SessionStatus status) {
-		new VisitValidator().validate(visit, result);
+	public String processSubmit(@Valid @ModelAttribute("visit") Visit visit, BindingResult result, SessionStatus status) {
 		if (result.hasErrors()) {
 			return "pets/visitForm";
 		}
@@ -65,5 +64,4 @@ public class AddVisitForm {
 			return "redirect:/owners/" + visit.getPet().getOwner().getId();
 		}
 	}
-
 }

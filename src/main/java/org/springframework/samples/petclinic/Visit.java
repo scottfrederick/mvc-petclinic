@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 
 /**
@@ -13,6 +15,7 @@ public class Visit extends BaseEntity {
 	private Date date;
 
 	/** Holds value of property description. */
+    @NotEmpty
 	private String description;
 
 	/** Holds value of property pet. */
