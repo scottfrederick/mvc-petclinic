@@ -13,6 +13,7 @@
 		- The controllers are autodetected POJOs labeled with the @Controller annotation.
 	-->
 	<context:component-scan base-package="org.springframework.samples.petclinic.web"/>
+	<context:component-scan base-package="org.springframework.samples.petclinic.validation"/>
 
     <mvc:annotation-driven/>
 
@@ -31,11 +32,13 @@
 		- This bean processes annotated handler methods, applying PetClinic-specific PropertyEditors
 		- for request parameter binding. It overrides the default AnnotationMethodHandlerAdapter.
 	-->
+<!--
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapterConfigurer" init-method="init">
 		<property name="webBindingInitializer">
 			<bean class="org.springframework.samples.petclinic.web.ClinicBindingInitializer" p:validator-ref="validator"/>
 		</property>
 	</bean>
+-->
 
 	<!--
 		- This bean resolves specific types of exceptions to corresponding logical 
@@ -109,5 +112,6 @@
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
 			p:basename="messages"/>
 
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+    <bean class="org.springframework.validation.annotation.AnnotationMethodValidator"/>
+    <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 </beans>

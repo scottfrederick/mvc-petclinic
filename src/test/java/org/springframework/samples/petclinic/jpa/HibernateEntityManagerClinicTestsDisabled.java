@@ -12,7 +12,7 @@ package org.springframework.samples.petclinic.jpa;
  *
  * @author Juergen Hoeller
  */
-public class HibernateEntityManagerClinicTests extends EntityManagerClinicTests {
+public class HibernateEntityManagerClinicTestsDisabled extends EntityManagerClinicTests {
 
 	@Override
 	protected String[] getConfigPaths() {

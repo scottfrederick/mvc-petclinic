@@ -32,14 +32,6 @@ public class Pet extends NamedEntity {
         return super.getName();
     }
 
-    @AssertTrue(message = "duplicate")
-    public boolean isUnique() {
-        if (isNew() && getOwner().getPet(getName(), true) != null) {
-			return false;
-		}
-        return true;
-    }
-
     public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
